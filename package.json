@@ -4,8 +4,6 @@
   "private": true,
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "@babel/plugin-proposal-do-expressions": "^7.5.0",
@@ -23,14 +21,9 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-syntax-import-meta": "^7.2.0",
     "@babel/plugin-transform-modules-commonjs": "^7.5.0",
-    "@babel/polyfill": "^7.4.4",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
-    "babel-eslint": "^10.0.2",
-    "babel-loader": "^8.0.6",
+    "babel-plugin-styled-components": "^1.10.6",
     "chalk": "^2.4.2",
-    "custom-react-scripts": "0.2.2",
-    "eslint": "^6.1.0",
+    "customize-cra": "^0.4.1",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-import-resolver-webpack": "^0.11.1",
@@ -42,17 +35,19 @@
     "eslint-plugin-react": "^7.14.3",
     "fs": "0.0.1-security",
     "husky": "^3.0.2",
+    "react-scripts": "^3.0.1",
     "lint-staged": "^9.2.1",
     "node-sass-chokidar": "^1.3.5",
     "npm-run-all": "^4.1.5",
     "prettier": "1.18.2",
+    "react-app-rewired": "^2.1.3",
     "stylelint": "^10.1.0",
     "stylelint-scss": "^3.9.3"
   },
   "dependencies": {
     "history": "4.9.0",
     "marked": "^0.7.0",
-    "mobx": "^5.13.0",
+    "mobx": "^4.13.0",
     "mobx-react": "^6.1.1",
     "promise.prototype.finally": "^3.1.0",
     "prop-types": "^15.7.2",
@@ -74,12 +69,12 @@
     ]
   },
   "scripts": {
-    "start-js": "HTTPS=true react-scripts start",
+    "start-js": "HTTPS=true react-app-rewired start",
     "start": "npm-run-all -p watch-css start-js",
-    "build": "npm run build-css && react-scripts build",
+    "build": "npm run build-css && react-app-rewired build",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-app-rewired test --env=jsdom",
     "lint": "npm-run-all lint:*",
     "lint:js": "eslint ./src/** --ext .jsx,.js --color -f stylish --fix",
     "lint:css": "stylelint './src/**/*.scss' --color -r -f verbose --fix",
@@ -91,5 +86,20 @@
       "commit-msg": "./index.js ${HUSKY_GIT_PARAMS}",
       "pre-commit": "git add . -A && lint-staged"
     }
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

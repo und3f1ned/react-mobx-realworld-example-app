@@ -1,22 +1,21 @@
-import Header from './Header';
-import React from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom';
-import { inject, observer } from 'mobx-react';
-import PrivateRoute from './PrivateRoute';
+import React from "react";
+import { Switch, Route, withRouter } from "react-router-dom";
+import { inject, observer } from "mobx-react";
+import Header from "./Header";
+import PrivateRoute from "./PrivateRoute";
 
-import Article from './Article';
-import Editor from './Editor';
-import Home from './Home';
-import Login from './Login';
-import Profile from './Profile';
-import Register from './Register';
-import Settings from './Settings';
+import Article from "./Article";
+import Editor from "./Editor";
+import Home from "./Home";
+import Login from "./Login";
+import Profile from "./Profile";
+import Register from "./Register";
+import Settings from "./Settings";
 
-@inject('userStore', 'commonStore')
+@inject("userStore", "commonStore")
 @withRouter
 @observer
-export default class App extends React.Component {
-
+class App extends React.Component {
   componentWillMount() {
     if (!this.props.commonStore.token) {
       this.props.commonStore.setAppLoaded();
@@ -25,7 +24,8 @@ export default class App extends React.Component {
 
   componentDidMount() {
     if (this.props.commonStore.token) {
-      this.props.userStore.pullUser()
+      this.props.userStore
+        .pullUser()
         .finally(() => this.props.commonStore.setAppLoaded());
     }
   }
@@ -48,8 +48,8 @@ export default class App extends React.Component {
         </div>
       );
     }
-    return (
-      <Header />
-    );
+    return <Header />;
   }
 }
+
+export default App;
