@@ -4,7 +4,6 @@ import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import RedError from '../RedError';
-import marked from 'marked';
 
 
 @inject('articlesStore', 'userStore', 'commentsStore')
@@ -35,7 +34,6 @@ export default class Article extends React.Component {
 
     if (!article) return <RedError message="Can't load article" />;
 
-    const markup = { __html: marked(article.body, { sanitize: true }) };
     const canModify = currentUser && currentUser.username === article.author.username;
     return (
       <div className="article-page">

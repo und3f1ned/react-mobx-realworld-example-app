@@ -29,11 +29,9 @@
   },
   "dependencies": {
     "history": "4.9.0",
-    "marked": "^0.7.0",
     "mobx": "^4.13.0",
     "mobx-react": "^6.1.1",
     "promise.prototype.finally": "^3.1.0",
-    "prop-types": "^15.7.2",
     "query-string": "6.8.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
