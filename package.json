@@ -2,32 +2,80 @@
   "name": "react-mobx-realworld-example-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://react-mobx.realworld.io",
   "license": "MIT",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chalk": "^2.4.2",
     "custom-react-scripts": "0.2.2",
-    "gh-pages": "^2.0.1"
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-import-resolver-webpack": "^0.11.1",
+    "eslint-loader": "^2.2.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.14.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "fs": "0.0.1-security",
+    "husky": "^3.0.2",
+    "lint-staged": "^9.2.1",
+    "node-sass-chokidar": "^1.3.5",
+    "npm-run-all": "^4.1.5",
+    "prettier": "1.18.2",
+    "stylelint": "^10.1.0",
+    "stylelint-scss": "^3.9.3"
   },
   "dependencies": {
     "history": "4.9.0",
-    "marked": "^0.6.2",
-    "mobx": "^5.9.4",
-    "mobx-react": "^5.4.3",
+    "marked": "^0.7.0",
+    "mobx": "^5.13.0",
+    "mobx-react": "^6.1.1",
     "promise.prototype.finally": "^3.1.0",
     "prop-types": "^15.7.2",
-    "query-string": "6.4.2",
+    "query-string": "6.8.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-router-dom": "5.0.0",
-    "superagent": "^5.0.2",
+    "react-router-dom": "5.0.1",
+    "superagent": "^5.1.0",
     "superagent-promise": "^1.1.0"
   },
+  "lint-staged": {
+    "*.{jsx,js}": [
+      "eslint --color -f stylish --fix",
+      "git add"
+    ],
+    "*.scss": [
+      "stylelint --color -r -f verbose --fix",
+      "git add"
+    ]
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start-js": "HTTPS=true react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "lint": "npm-run-all lint:*",
+    "lint:js": "eslint ./src/** --ext .jsx,.js --color -f stylish --fix",
+    "lint:css": "stylelint './src/**/*.scss' --color -r -f verbose --fix",
+    "format": "prettier --config .prettierrc --write 'src/**/*.{js,jsx}'",
+    "release": "npm version patch && git push --tags && npm publish --access public"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "./index.js ${HUSKY_GIT_PARAMS}",
+      "pre-commit": "git add . -A && lint-staged"
+    }
   }
 }
