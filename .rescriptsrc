@@ -1,0 +1,10 @@
+module.exports = [
+  [
+    'use-babel-config',
+    {
+      presets: ['react-app'],
+      plugins: [['@babel/plugin-proposal-decorators', { legacy: true }]],
+    },
+  ],
+  ['use-rewire', 'react-app-rewire-micro-frontends'],
+];

@@ -2,13 +2,11 @@ import { observable, action, reaction } from 'mobx';
 import agent from '../agent';
 
 class CommonStore {
+  @observable appName = 'Login application';
 
-  @observable appName = 'Conduit';
-  @observable token = window.localStorage.getItem('jwt');
+  @observable token = null;
+
   @observable appLoaded = false;
-
-  @observable tags = [];
-  @observable isLoadingTags = false;
 
   constructor() {
     reaction(
@@ -19,15 +17,8 @@ class CommonStore {
         } else {
           window.localStorage.removeItem('jwt');
         }
-      }
+      },
     );
-  }
-
-  @action loadTags() {
-    this.isLoadingTags = true;
-    return agent.Tags.getAll()
-      .then(action(({ tags }) => { this.tags = tags.map(t => t.toLowerCase()); }))
-      .finally(action(() => { this.isLoadingTags = false; }))
   }
 
   @action setToken(token) {
@@ -35,9 +26,9 @@ class CommonStore {
   }
 
   @action setAppLoaded() {
+    this.token = window.localStorage.getItem('jwt');
     this.appLoaded = true;
   }
-
 }
 
 export default new CommonStore();
